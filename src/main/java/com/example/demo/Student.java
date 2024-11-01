@@ -1,13 +1,11 @@
 package com.example.demo;
 
 import jakarta.persistence.*;
-
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "Student")
 public class Student {
-
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id // Primary key
     private long SUID;
@@ -53,4 +51,5 @@ public class Student {
     public String toString() {
         return "SUID:"+SUID+" "+"Name:"+firstname+" "+lastname;
     }
+
 }

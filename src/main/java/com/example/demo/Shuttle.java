@@ -1,14 +1,13 @@
 package com.example.demo;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
 import java.util.LinkedList;
 import java.util.List;
 import com.example.utils.*;
 
+/**
+ * The Shuttle class represents a shuttle bus that can carry students to different target addresses.
+ * It maintains a list of current passengers (students) and a list of target addresses.
+ */
 
 public class Shuttle {
     //@Column(name = "CurrentTargetAddress")
@@ -17,13 +16,12 @@ public class Shuttle {
     private List<Student> studentlist;
     private int number;
 
-    /* Usually,
+    /** Usually,
     It has three status:
     * 1: waiting at the stop (waiting)
     * 2: riding
     * 3: returning
-    * */
-    //@Column(name = "Status")
+    */
     private Status status;
 
     public Shuttle(){
@@ -37,6 +35,7 @@ public class Shuttle {
     public void addStudent(Student student){
         studentlist.add(student);
         number++;
+        System.out.println(student.getFirstname()+" "+student.getLastname()+" gets on.");
     }
 
     public void addAddress(String address){
@@ -46,7 +45,7 @@ public class Shuttle {
         }
 
         targets.add(address);
-        System.out.println(currenttargetaddress);
+        System.out.println("Currenttargetaddress:"+currenttargetaddress);
     }
 
     public void dropOff(){
@@ -59,7 +58,7 @@ public class Shuttle {
             status = Status.returning;
 
         }
-        System.out.println(currenttargetaddress);
+        System.out.println("currenttargetaddress"+currenttargetaddress);
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.service;
 import com.example.demo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,23 +28,15 @@ public class StudentShuttleService implements StudentService{
        restTemplate = new RestTemplate();
     }
 
-    public String sendHttpRequest(String url) {
+    @Scheduled(fixedRate = 1000) // 每秒执行一次
+    public void sendShuttleLocation() {
+        String url = "http://localhost:5000/shuttleLocation?longitude=12.3&latitude=34.2";
+        System.out.println("hello");
         try {
-            System.out.println("Sending request to URL: " + url);
-            ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-            System.out.println("Response status code: " + response.getStatusCode());
-            System.out.println("Response body: " + response.getBody());
-
-            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                System.out.println("Yes");
-                return "Yes";
-            } else {
-                System.out.println("No");
-                return "No";
-            }
+            restTemplate.getForObject(url, String.class);
+            System.out.println("位置已发送: 经度 12.3, 纬度 34.2");
         } catch (Exception e) {
-            System.out.println("Error occurred: " + e.getMessage());
-            return "No";
+            System.out.println("发送位置失败: " + e.getMessage());
         }
     }
 

@@ -18,15 +18,12 @@ public class StudentController {
     @Autowired
     private StudentShuttleService studentShuttleService;
     private Shuttle shuttle ;
-    /*@GetMapping("/student/{SUID}")
-    public Student getStudentByID(@PathVariable long SUID){
-        return studentShuttleService.getStudentById(SUID);
 
-    }*/
-
+    // default constructor
     StudentController(){
         shuttle = new Shuttle();
     }
+
     @GetMapping("/student/{SUID}")
     public Response<Student> getStudentByID(@PathVariable long SUID){
         return Response.newSuccess(studentShuttleService.getStudentById(SUID));
@@ -40,12 +37,11 @@ public class StudentController {
     @GetMapping("/addPassenger")
     public Response<String>addPassenger(@RequestParam("SUID") long SUID, @RequestParam("address") String address){
         Student passenger = studentShuttleService.getStudentById(SUID);
-        shuttle.addStudent(passenger );
-        shuttle.addAddress( address );
+        shuttle.addStudent(passenger);
+        shuttle.addAddress(address);
         System.out.println(passenger.getSUID()+" gets on!");
         return Response.newSuccess("Yes");
     }
-
 
     @GetMapping("/requestPickupBySuid")
     public Response<EstimatedTimeArrival> addRequest(@RequestParam("SUID") long SUID){
@@ -59,16 +55,14 @@ public class StudentController {
         //Generate the ETA and request shuttle.
         EstimatedTimeArrival ETA = new EstimatedTimeArrival(studentShuttleService.addRequest(SUID),time);
 
-        try {//Try to find it:
+        try { //Try to find it:
             studentShuttleService.requestPickup(SUID, ETA);
         } catch (InvalidUserException e) {
             System.out.println("Caught exception: " + e.getMessage());
             return Response.newFail("No such student: Access Denied");
         }
-
         //If it finds the student:
         return Response.newSuccess(ETA);
-
     }
 
     @PostMapping("/student")
