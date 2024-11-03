@@ -8,13 +8,14 @@ import com.example.utils.*;
  * The Shuttle class represents a shuttle bus that can carry students to different target addresses.
  * It maintains a list of current passengers (students) and a list of target addresses.
  */
-
 public class Shuttle {
     //@Column(name = "CurrentTargetAddress")
     private String currenttargetaddress;
     private List<String> targets;
     private List<Student> studentlist;
     private int number;
+
+
 
     /** Usually,
     It has three status:
@@ -48,7 +49,9 @@ public class Shuttle {
         System.out.println("Currenttargetaddress:"+currenttargetaddress);
     }
 
-    public void dropOff(){
+    public boolean dropOff(){
+        if(targets.isEmpty()) return false;
+
         targets.remove(0);
         studentlist.remove(0);
         number--;
@@ -59,6 +62,12 @@ public class Shuttle {
 
         }
         System.out.println("currenttargetaddress"+currenttargetaddress);
+        return true;
     }
 
+    public String getCurrenttargetaddress() {
+        return currenttargetaddress;
+    }
+
+    public List<Student> getStudentlist() {return studentlist; }
 }

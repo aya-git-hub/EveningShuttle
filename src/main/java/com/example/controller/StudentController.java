@@ -6,6 +6,8 @@ import com.example.utils.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
@@ -28,10 +30,27 @@ public class StudentController {
     public Response<Student> getStudentByID(@PathVariable long SUID){
         return Response.newSuccess(studentShuttleService.getStudentById(SUID));
     }
-
+//
+    @GetMapping("/dropOff")
+    public String dropOffStudent() {
+        if(shuttle.dropOff())
+            return "Student has been dropped off successfully.";
+        else
+            return "Warning, nobody is in the shuttle now.";
+}
     @GetMapping("/hello")
     public String hello(){
         return "hello";
+    }
+
+    @GetMapping("/current")
+    public String getCurrentTarget() {
+        return "Current Target: " + shuttle.getCurrenttargetaddress();
+    }
+
+    @GetMapping("/studentList")//show current students in the shuttle
+    public String getStudentList() {
+        return "Student List: " + shuttle.getStudentlist().toString();
     }
 
     @GetMapping("/addPassenger")
@@ -44,7 +63,7 @@ public class StudentController {
     }
 
     @GetMapping("/requestPickupBySuid")
-    public Response<EstimatedTimeArrival> addRequest(@RequestParam("SUID") long SUID){
+    public Response<EstimatedTimeArrival> addRequest(@RequestParam("SUID") long SUID,Model model){
         // Response<Boolean> response = new Response<>();
         // Send randomly ETA
         Random rand = new Random();

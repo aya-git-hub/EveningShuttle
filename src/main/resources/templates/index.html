@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Shuttle Service Homepage</title>
+</head>
+<body>
+<h1>Hello</h1>
+<a href="/current">查看当前目标 (currentTarget)</a>
+<br><br>
+<button onclick="dropOffStudent()">Drop Off</button>
+<button onclick="viewStudentList()">查看学生列表</button>
+<br><br>
+<div id="studentList"></div>
+
+<script>
+    function dropOffStudent() {
+        fetch('/dropOff')
+            .then(response => response.text())
+            .then(data => alert(data))
+            .catch(error => console.error('Error:', error));
+    }
+    function viewStudentList() {
+        fetch('/studentList')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('studentList').innerText = data;
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
+</body>
+</html>

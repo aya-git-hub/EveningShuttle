@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
@@ -28,7 +29,7 @@ public class StudentShuttleService implements StudentService{
        restTemplate = new RestTemplate();
     }
 
-    @Scheduled(fixedRate = 1000) // 每秒执行一次
+    @Scheduled(fixedRate = 18000) // 每秒执行一次
     public void sendShuttleLocation() {
         String url = "http://localhost:5000/shuttleLocation?longitude=12.3&latitude=34.2";
         System.out.println("hello");
@@ -36,7 +37,7 @@ public class StudentShuttleService implements StudentService{
             restTemplate.getForObject(url, String.class);
             System.out.println("位置已发送: 经度 12.3, 纬度 34.2");
         } catch (Exception e) {
-            System.out.println("发送位置失败: " + e.getMessage());
+            System.out.println("Fail to send location: " + e.getMessage());
         }
     }
 
@@ -49,8 +50,9 @@ public class StudentShuttleService implements StudentService{
                 student.setEdt(eta.getEta());
                 studentRepository.save(student);
                 System.out.println("Student record updated successfully.");
+
             }
-            return "yes";
+            return "index";
         } else {
             System.out.println("no such student");
             throw new InvalidUserException("No such student: Access Denied");
