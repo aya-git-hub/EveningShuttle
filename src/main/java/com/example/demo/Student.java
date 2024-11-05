@@ -3,6 +3,14 @@ package com.example.demo;
 import jakarta.persistence.*;
 import java.time.LocalTime;
 
+/**
+ * The Student class represents a student entity that maps to the "dmo.Student" table in an SQL Server database.
+ * This entity is part of a Java application using JPA (see StudentRepository).
+ * The fields of this class are mapped to the columns of the "Student" table.
+ *
+ * "@Column" are used to define the relationship between this Java class and the real table column.
+ */
+
 @Entity
 @Table(name = "Student")
 public class Student {

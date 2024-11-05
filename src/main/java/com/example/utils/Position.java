@@ -1,8 +1,8 @@
 package com.example.utils;
 
 public class Position {
-    private double longitude;
-    private double latitude;
+    protected double longitude;
+    protected double latitude;
     public Position(double long_, double lat){
         longitude = long_;
         latitude = lat;

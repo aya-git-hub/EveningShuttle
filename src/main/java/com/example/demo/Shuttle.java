@@ -9,13 +9,10 @@ import com.example.utils.*;
  * It maintains a list of current passengers (students) and a list of target addresses.
  */
 public class Shuttle {
-    //@Column(name = "CurrentTargetAddress")
     private String currenttargetaddress;
-    private List<String> targets;
-    private List<Student> studentlist;
+    private List<String> targets;// a queue
+    private List<Student> studentlist;// a queue
     private int number;
-
-
 
     /** Usually,
     It has three status:
@@ -44,14 +41,13 @@ public class Shuttle {
             currenttargetaddress = address;
             status = Status.riding;
         }
-
         targets.add(address);
         System.out.println("Currenttargetaddress:"+currenttargetaddress);
     }
 
     public boolean dropOff(){
+        // return false when nobody here
         if(targets.isEmpty()) return false;
-
         targets.remove(0);
         studentlist.remove(0);
         number--;
@@ -59,7 +55,6 @@ public class Shuttle {
         else{//If there is no passenger on the shuttle:
             currenttargetaddress = null;
             status = Status.returning;
-
         }
         System.out.println("currenttargetaddress"+currenttargetaddress);
         return true;

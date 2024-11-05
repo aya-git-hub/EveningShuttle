@@ -72,6 +72,7 @@ public class StudentController {
         LocalTime time = LocalTime.of(0, randomminute, randomsecond);
 
         //Generate the ETA and request shuttle.
+        // Use addRequest() to determine whether the student is valid.
         EstimatedTimeArrival ETA = new EstimatedTimeArrival(studentShuttleService.addRequest(SUID),time);
 
         try { //Try to find it:

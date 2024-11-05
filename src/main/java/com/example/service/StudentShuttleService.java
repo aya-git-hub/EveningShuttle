@@ -1,41 +1,40 @@
 package com.example.service;
 
 import com.example.demo.*;
+import com.example.utils.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.http.ResponseEntity;
-
-
 import java.util.List;
 import java.util.Optional;
-
-import com.example.utils.*;
 
 @Service
 public class StudentShuttleService implements StudentService{
 
     @Autowired
     private StudentRepository studentRepository;
-
     private final RestTemplate restTemplate;
 
     StudentShuttleService(){
        restTemplate = new RestTemplate();
     }
 
-    @Scheduled(fixedRate = 18000) // 每秒执行一次
+    @Override
+    @Scheduled(fixedRate = 20000) // per second
     public void sendShuttleLocation() {
-        String url = "http://localhost:5000/shuttleLocation?longitude=12.3&latitude=34.2";
+        Position randomlocation = new RandomPosition();
+        //String url = "http://localhost:5000/shuttleLocation?longitude=12.3&latitude=34.2";
+        String url = "http://localhost:5000/shuttleLocation?longitude=" + randomlocation.getLongitude() + "&latitude=" + randomlocation.getLatitude();
         System.out.println("hello");
         try {
             restTemplate.getForObject(url, String.class);
-            System.out.println("位置已发送: 经度 12.3, 纬度 34.2");
+            System.out.println("Location has been sent"+randomlocation);
         } catch (Exception e) {
             System.out.println("Fail to send location: " + e.getMessage());
         }
@@ -43,15 +42,12 @@ public class StudentShuttleService implements StudentService{
 
     public String requestPickup(long suid, EstimatedTimeArrival eta) throws InvalidUserException{
         if (eta.isValid()) {
+            // Student found, update the record
             List<Student> studentlist = studentRepository.findBySUID(suid);
-            if (true) {
-                // Student found, update the record
-                Student student = studentlist.get(0);
-                student.setEdt(eta.getEta());
-                studentRepository.save(student);
-                System.out.println("Student record updated successfully.");
-
-            }
+            Student student = studentlist.get(0);
+            student.setEdt(eta.getEta());
+            studentRepository.save(student);
+            System.out.println("Student record updated successfully.");
             return "index";
         } else {
             System.out.println("no such student");
