@@ -39,6 +39,8 @@ Controller Layer: Facade
 2) In Controller layer: use addRequest(SUID) to process the request
 3) addRequest(SUID) can determine whether the student is valid
 4) If it is valid, call requestPickup() in Service, otherwise, return error message.
+![Loginc](./pic/logic.png)
+
 
 ### Directory Structure
 
