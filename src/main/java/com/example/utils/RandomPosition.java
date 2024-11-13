@@ -6,17 +6,17 @@ import java.util.Random;
  *  Use this!
  */
 public class RandomPosition extends Position{
-
+    // DONE: 2024/11/5
     public RandomPosition(){
         super((new Random().nextDouble() * 360) - 180, (new Random().nextDouble() * 180) - 90);
     }
     public RandomPosition(double a, double b ){
-        super(a,b);
+        super( a, b);
     }
     @Override
     public String toString() {
-        String reallongitude = longitude >= 0 ? String.format("%.2f", longitude)+"°E" : String.format("%.2f", -longitude)+"°W";
-        String reallatitude = latitude >= 0 ? String.format("%.2f", latitude)+"°N" : String.format("%.2f", -latitude)+"°S";
-        return "Longitude: "+reallongitude+", Latitude: "+reallatitude;
+        String realLongitude = longitude >= 0 ? String.format("%.2f", longitude)+"°E" : String.format("%.2f", -longitude)+"°W";
+        String realLatitude = latitude >= 0 ? String.format("%.2f", latitude)+"°N" : String.format("%.2f", -latitude)+"°S";
+        return "Longitude: "+realLongitude+", Latitude: "+realLatitude;
     }
 }

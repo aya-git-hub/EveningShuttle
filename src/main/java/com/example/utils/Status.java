@@ -1,5 +1,4 @@
 package com.example.utils;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * The three status that the shuttle will be.

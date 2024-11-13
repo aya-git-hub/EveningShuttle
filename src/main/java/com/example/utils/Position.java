@@ -3,9 +3,9 @@ package com.example.utils;
 public class Position {
     protected double longitude;
     protected double latitude;
-    public Position(double long_, double lat){
-        longitude = long_;
-        latitude = lat;
+    public Position(double longitude, double latitude){
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     public double getLongitude() {

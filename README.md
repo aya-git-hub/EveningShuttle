@@ -49,3 +49,10 @@ Controller Layer: Facade
 | service/              | Service Layer                     |
 | utils/                | Some Helper Classes               |
 
+### Front-End Structure
+| Folder (resources/) | Contents                          | 
+|---------------------|-----------------------------------|
+| templates/          | Some HTML template files          | 
+| static/             | Static resources: JavaScript file |
+
+

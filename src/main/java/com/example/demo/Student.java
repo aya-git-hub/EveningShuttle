@@ -50,6 +50,10 @@ public class Student {
 
     public LocalTime getEdt() { return eta; }
 
+    public LocalTime getEta() {
+        return eta;
+    }
+
     /*-------------- to set -----------*/
     public void setEdt(LocalTime eta) {
         this.eta = eta;

@@ -1,18 +1,23 @@
 package com.example.controller;
-import com.example.demo.*;
-import com.example.service.*;
-import com.example.utils.*;
 
-
+import com.example.demo.Shuttle;
+import com.example.demo.Student;
+import com.example.service.Response;
+import com.example.service.StudentShuttleService;
+import com.example.utils.EstimatedTimeArrival;
+import com.example.utils.InvalidUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Random;
 import java.time.LocalTime;
+import java.util.Random;
 
+/**
+ * Controllers play a crucial role in Spring Boot applications, as they handle incoming HTTP requests and determine the appropriate response to send back.
+ * Act as intermediaries between the client (usually a web browser or a mobile app) and the application’s business logic.
+ */
 @ComponentScan(basePackages = "com.example.service")
 
 @RestController
@@ -33,11 +38,8 @@ public class StudentController {
 //
     @GetMapping("/dropOff")
     public String dropOffStudent() {
-        if(shuttle.dropOff())
-            return "Student has been dropped off successfully.";
-        else
-            return "Warning, nobody is in the shuttle now.";
-}
+        return studentShuttleService.dropStudent(shuttle);
+    }
     @GetMapping("/hello")
     public String hello(){
         return "hello";
@@ -45,7 +47,7 @@ public class StudentController {
 
     @GetMapping("/current")
     public String getCurrentTarget() {
-        return "Current Target: " + shuttle.getCurrenttargetaddress();
+        return "Current Target: " + shuttle.getCurrentTargetAddress();
     }
 
     @GetMapping("/studentList")//show current students in the shuttle
@@ -70,16 +72,16 @@ public class StudentController {
         int randomminute = rand.nextInt(60);
         int randomsecond = rand.nextInt(60);
         LocalTime time = LocalTime.of(0, randomminute, randomsecond);
-
-        //Generate the ETA and request shuttle.
+        // Generate the ETA and request shuttle.
         // Use addRequest() to determine whether the student is valid.
         EstimatedTimeArrival ETA = new EstimatedTimeArrival(studentShuttleService.addRequest(SUID),time);
-
         try { //Try to find it:
+             //If the student did not make the request:
             studentShuttleService.requestPickup(SUID, ETA);
+            //else return Response.newFail("This student has already submitted the request and cannot submit it again. ");
         } catch (InvalidUserException e) {
             System.out.println("Caught exception: " + e.getMessage());
-            return Response.newFail("No such student: Access Denied");
+            return Response.newFail(e.getMessage());
         }
         //If it finds the student:
         return Response.newSuccess(ETA);

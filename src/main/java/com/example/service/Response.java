@@ -15,6 +15,7 @@ public class Response <T>{
 
     public static<K> Response<K> newSuccess(K data){
         // TODO: 2024/10/31
+        // DONE: 2024/11/1
          Response<K> response = new Response<>();
          response.setData(data);
          response.setSuccess(true);
@@ -23,6 +24,8 @@ public class Response <T>{
 
     public static<Void> Response<Void> newFail(String error){
         // TODO: 2024/10/31
+        // FIXME: 2024/11/1
+        // DONE: 2024/11/2
         Response<Void> response = new Response<>();
         response.setErrorMessage(error);
         response.setSuccess(false);
