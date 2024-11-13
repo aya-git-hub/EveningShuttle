@@ -13,6 +13,10 @@ public class Response <T>{
     private boolean isSuccess;
     private String errorMessage;
 
+    private Response() {
+        // get its instance by calling newSuccess() or newFail()
+    }
+
     public static<K> Response<K> newSuccess(K data){
         // TODO: 2024/10/31
         // DONE: 2024/11/1
